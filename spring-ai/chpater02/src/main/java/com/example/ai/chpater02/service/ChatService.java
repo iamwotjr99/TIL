@@ -1,17 +1,20 @@
 package com.example.ai.chpater02.service;
 
-import org.springframework.ai.chat.model.ChatModel;
+import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ChatService {
-    private final ChatModel chatModel;
+    private final ChatClient chatClient;
 
-    public ChatService(ChatModel chatModel) {
-        this.chatModel = chatModel;
+    public ChatService(ChatClient chatClient) {
+        this.chatClient = chatClient;
     }
 
     public String getChatResponse(String query) {
-        return chatModel.call(query);
+        return chatClient.prompt()
+                .user(query)
+                .call()
+                .content();
     }
 }
