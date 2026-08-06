@@ -1,6 +1,8 @@
 package com.example.ai.practice.controller;
 
+import com.example.ai.practice.entity.Tutorial;
 import com.example.ai.practice.service.ChatService;
+import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,10 +18,9 @@ public class ChatController {
 
     // open AI 호출용 엔드포인트
     @GetMapping("/chat/openai")
-    public ResponseEntity<String>
+    public List<Tutorial>
         chatWithOpenAi(@RequestParam(value = "q", defaultValue = "안녕") String query) {
-        String response = chatService.getOpenAiResponse(query);
-        return ResponseEntity.ok(response);
+        return chatService.getTutorialList(query);
     }
 
     // ollama 호출용 엔드포인트
