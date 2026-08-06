@@ -1,4 +1,4 @@
-package com.example.ai.chpater02.config;
+package com.example.ai.practice.config;
 
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.ollama.OllamaChatModel;

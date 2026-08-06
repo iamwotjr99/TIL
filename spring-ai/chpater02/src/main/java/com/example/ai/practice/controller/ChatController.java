@@ -1,6 +1,6 @@
-package com.example.ai.chpater02.controller;
+package com.example.ai.practice.controller;
 
-import com.example.ai.chpater02.service.ChatService;
+import com.example.ai.practice.service.ChatService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;

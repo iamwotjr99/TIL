@@ -1,4 +1,4 @@
-package com.example.ai.chpater02;
+package com.example.ai.practice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
