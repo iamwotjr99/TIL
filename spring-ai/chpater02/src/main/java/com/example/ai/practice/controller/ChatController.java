@@ -18,9 +18,9 @@ public class ChatController {
 
     // open AI 호출용 엔드포인트
     @GetMapping("/chat/openai")
-    public List<Tutorial>
+    public String
         chatWithOpenAi(@RequestParam(value = "q", defaultValue = "안녕") String query) {
-        return chatService.getTutorialList(query);
+        return chatService.getPriorityTestResponse(query);
     }
 
     // ollama 호출용 엔드포인트

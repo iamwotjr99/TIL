@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.metadata.ChatResponseMetadata;
 import org.springframework.ai.chat.prompt.Prompt;
+import org.springframework.ai.openai.OpenAiChatOptions;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
@@ -88,6 +89,16 @@ public class ChatService {
                 .user(query)
                 .call()
                 .entity(new ParameterizedTypeReference<List<Tutorial>>() {});
+    }
+
+    public String getPriorityTestResponse(String query) {
+        OpenAiChatOptions requestOptions = OpenAiChatOptions.builder()
+                .temperature(1.0)
+                .build();
+
+        return openAiClient.prompt(new Prompt(query, requestOptions))
+                .call()
+                .content();
     }
 
     public String getOllamaResponse(String query) {
