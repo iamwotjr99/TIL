@@ -14,9 +14,19 @@ public class ChatController {
         this.chatService = chatService;
     }
 
-    @GetMapping("/chat")
-    public ResponseEntity<String> chat(@RequestParam(value = "query", defaultValue = "안녕") String query) {
-        String chatResponse = chatService.getChatResponse(query);
-        return ResponseEntity.ok(chatResponse);
+    // open AI 호출용 엔드포인트
+    @GetMapping("/chat/openai")
+    public ResponseEntity<String>
+        chatWithOpenAi(@RequestParam(value = "q", defaultValue = "안녕") String query) {
+        String response = chatService.getOpenAiResponse(query);
+        return ResponseEntity.ok(response);
+    }
+
+    // ollama 호출용 엔드포인트
+    @GetMapping("/chat/ollama")
+    public ResponseEntity<String>
+        chatWithOllama(@RequestParam(value = "q", defaultValue = "안녕") String query) {
+        String response = chatService.getOllamaResponse(query);
+        return ResponseEntity.ok(response);
     }
 }
