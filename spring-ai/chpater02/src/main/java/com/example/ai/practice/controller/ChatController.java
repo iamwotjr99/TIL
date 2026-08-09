@@ -39,4 +39,13 @@ public class ChatController {
 
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/chat/external")
+    public ResponseEntity<String> chatWithExternalTemplate(
+            @RequestParam(defaultValue = "Spring Framework validation") String concept
+    ) {
+        String response = chatService.getExternalTemplateResponse(concept);
+
+        return ResponseEntity.ok(response);
+    }
 }

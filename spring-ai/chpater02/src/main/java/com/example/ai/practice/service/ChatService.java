@@ -7,11 +7,19 @@ import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.ai.chat.prompt.SystemPromptTemplate;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ChatService {
     private final ChatClient chatClient;
+
+    @Value("classpath:prompts/system-message.st")
+    private Resource systemMessageResource;
+
+    @Value("classpath:prompts/user-message.st")
+    private Resource userMessageResource;
 
     public ChatService(ChatClient chatClient) {
         this.chatClient = chatClient;
@@ -49,5 +57,15 @@ public class ChatService {
 
         Prompt prompt = new Prompt(List.of(systemMessage, userMessage));
         return this.chatClient.prompt(prompt).call().content();
+    }
+
+    public String getExternalTemplateResponse(String concept) {
+        return chatClient.prompt()
+                .system(systemMessageResource)
+                .user(u -> u.text(userMessageResource)
+                        .param("concept", concept)
+                )
+                .call()
+                .content();
     }
 }
