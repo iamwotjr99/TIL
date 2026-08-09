@@ -19,4 +19,24 @@ public class ChatController {
         String response = chatService.getExpressResponse(query);
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/chat/explicit")
+    public ResponseEntity<String> chatWithExplicitTemplate(
+            @RequestParam(defaultValue = "Spring Framework") String subject,
+            @RequestParam(defaultValue = "Spring @Controller example") String example
+    ) {
+        String response = chatService.getExplicitTemplateResponse(subject, example);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/chat/role-dynamic")
+    public ResponseEntity<String> chatWithRoleTemplate(
+            @RequestParam(defaultValue = "자바") String subject,
+            @RequestParam(defaultValue = "람다 스트림") String example
+    ) {
+        String response = chatService.getRoleBasedTemplateResponse(subject,
+                example);
+
+        return ResponseEntity.ok(response);
+    }
 }
