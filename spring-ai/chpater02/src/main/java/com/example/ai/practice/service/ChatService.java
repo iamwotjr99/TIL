@@ -2,7 +2,9 @@ package com.example.ai.practice.service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.chat.prompt.PromptTemplate;
@@ -77,4 +79,19 @@ public class ChatService {
                 .stream()
                 .content();
     }
+
+    public String chat(String conversationId, String query) {
+
+        String targetId = (conversationId != null && !conversationId.isBlank()) ? conversationId : UUID.randomUUID().toString();
+
+        return this.chatClient
+                .prompt()
+                .user(query)
+                .advisors(advisor -> advisor.param(ChatMemory.CONVERSATION_ID, targetId))
+                .call()
+                .content();
+    }
 }
+
+// 내 이름은 이재석이야.
+// 내 이름이 뭐야?

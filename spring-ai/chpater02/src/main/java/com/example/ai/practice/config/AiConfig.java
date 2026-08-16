@@ -1,10 +1,9 @@
 package com.example.ai.practice.config;
 
-import com.example.ai.practice.advisor.TokenPrintAdvisor;
-import java.util.List;
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.client.advisor.SafeGuardAdvisor;
+import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
+import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -12,13 +11,16 @@ import org.springframework.context.annotation.Configuration;
 public class AiConfig {
 
     @Bean
-    public ChatClient chatClient(ChatClient.Builder builder) {
+    public ChatClient chatClient(ChatClient.Builder builder, ChatMemory chatMemory) {
+
+        MessageChatMemoryAdvisor memoryAdvisor = MessageChatMemoryAdvisor.builder(chatMemory).build();
+
         return builder
                 .defaultAdvisors(
-                        new SimpleLoggerAdvisor(),
-                        new SafeGuardAdvisor(List.of("games")),
-                        new TokenPrintAdvisor()
+                        memoryAdvisor,
+                        new SimpleLoggerAdvisor()
                 )
+                .defaultSystem("You are a helpful health trainer.")
                 .build();
     }
 }
