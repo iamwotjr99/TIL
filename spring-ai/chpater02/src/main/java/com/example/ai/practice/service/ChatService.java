@@ -80,18 +80,16 @@ public class ChatService {
                 .content();
     }
 
-    public String chat(String conversationId, String query) {
-
-        String targetId = (conversationId != null && !conversationId.isBlank()) ? conversationId : UUID.randomUUID().toString();
-
+    public String chat(String userId, String query) {
         return this.chatClient
                 .prompt()
                 .user(query)
-                .advisors(advisor -> advisor.param(ChatMemory.CONVERSATION_ID, targetId))
+                .advisors(advisor -> advisor.param(ChatMemory.CONVERSATION_ID, userId))
                 .call()
                 .content();
     }
 }
 
 // 내 이름은 이재석이야.
+// 내 이름은 김준수야.
 // 내 이름이 뭐야?

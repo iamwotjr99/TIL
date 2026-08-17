@@ -3,6 +3,7 @@ package com.example.ai.practice.controller;
 import com.example.ai.practice.service.ChatService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
@@ -56,7 +57,10 @@ public class ChatController {
     }
 
     @GetMapping("/chat")
-    public String chat(@RequestParam("query") String query) {
-        return chatService.chat("001", query);
+    public String chat(
+            @RequestParam("query") String query,
+            @RequestHeader("userId") String userId)
+    {
+        return chatService.chat(userId, query);
     }
 }
